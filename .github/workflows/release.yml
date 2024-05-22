@@ -25,8 +25,8 @@ jobs:
             - name: Package artifacts
               run: |
                   mkdir artifacts
-                  cp target/release/agency_flowchart artifacts/agency_flowchart_linux
-                  cp target/release/agency_flowchart artifacts/agency_flowchart_windows.exe
+                  cp target/release/agency-flowchart* artifacts/agency_flowchart_linux
+                  cp target/release/agency-flowchart*.exe artifacts/agency_flowchart_windows.exe
 
             - name: Create release
               id: create_release
