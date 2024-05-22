@@ -1,60 +1,60 @@
 name: Release
 
 on:
-  push:
-    branches:
-      - main
+    push:
+        branches:
+            - main
 
 jobs:
-  release:
-    name: Release
-    runs-on: ubuntu-latest
+    release:
+        name: Release
+        runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v2
 
-      - name: Set up Rust
-        uses: actions-rs/toolchain@v1
-        with:
-          toolchain: stable
+            - name: Set up Rust
+              uses: actions-rs/toolchain@v1
+              with:
+                  toolchain: stable
 
-      - name: Build release
-        run: cargo build --release
+            - name: Build release
+              run: cargo build --release
 
-      - name: Package artifacts
-        run: |
-          mkdir artifacts
-          cp target/release/agency_flowchart artifacts/agency_flowchart_linux
-          cp target/release/agency_flowchart.exe artifacts/agency_flowchart_windows.exe
+            - name: Package artifacts
+              run: |
+                  mkdir artifacts
+                  cp target/release/agency_flowchart* artifacts/agency_flowchart_linux
+                  cp target/release/agency_flowchart*.exe artifacts/agency_flowchart_windows.exe
 
-      - name: Create release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
-          draft: false
-          prerelease: false
+            - name: Create release
+              id: create_release
+              uses: actions/create-release@v1
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+              with:
+                  tag_name: ${{ github.ref }}
+                  release_name: Release ${{ github.ref }}
+                  draft: false
+                  prerelease: false
 
-      - name: Upload Linux artifact
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: artifacts/agency_flowchart_linux
-          asset_name: agency_flowchart_linux
-          asset_content_type: application/octet-stream
+            - name: Upload Linux artifact
+              uses: actions/upload-release-asset@v1
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+              with:
+                  upload_url: ${{ steps.create_release.outputs.upload_url }}
+                  asset_path: artifacts/agency_flowchart_linux
+                  asset_name: agency_flowchart_linux
+                  asset_content_type: application/octet-stream
 
-      - name: Upload Windows artifact
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: artifacts/agency_flowchart_windows.exe
-          asset_name: agency_flowchart_windows.exe
-          asset_content_type: application/octet-stream
+            - name: Upload Windows artifact
+              uses: actions/upload-release-asset@v1
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+              with:
+                  upload_url: ${{ steps.create_release.outputs.upload_url }}
+                  asset_path: artifacts/agency_flowchart_windows.exe
+                  asset_name: agency_flowchart_windows.exe
+                  asset_content_type: application/octet-stream
