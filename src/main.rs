@@ -1,4 +1,4 @@
-use std::io::{self, Write};
+use std::io::{self};
 
 fn main() {
     println!("How to increase your agency: a flowchart");
