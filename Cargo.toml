@@ -1,0 +1,8 @@
+[package]
+name = "agency-flowchart"
+version = "0.1.0"
+edition = "2021"
+authors = ["Andrew Pynch <andrewpynchbusiness@gmail.com>"]
+description = "A CLI program to increase your agency based on a flowchart"
+
+[dependencies]
